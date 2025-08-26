@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_beautiful_checklist_exercise/data/database_repository.dart';
+import 'package:simple_beautiful_checklist_exercise/data/shared_preferences_database.dart';
 import 'package:simple_beautiful_checklist_exercise/src/features/statistics/widgets/task_counter_card.dart';
 
 class StatisticsScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         child: Column(
           children: [
             const SizedBox(height: 60),
-            TaskCounterCard(taskCount: currentTaskCount),
+            TaskCounterCard(taskCount: currentTaskCount, counter: SharedPreferencesDatabase.counter,),
           ],
         ),
       ),

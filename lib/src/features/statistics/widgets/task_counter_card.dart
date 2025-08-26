@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:simple_beautiful_checklist_exercise/data/shared_preferences_database.dart';
 
 class TaskCounterCard extends StatelessWidget {
   final int taskCount;
+  final int counter;
 
-  const TaskCounterCard({super.key, required this.taskCount});
+  const TaskCounterCard({
+    super.key,
+    required this.taskCount,
+    required this.counter,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,32 @@ class TaskCounterCard extends StatelessWidget {
                 child: Text(
                   "Anzahl der offenen Tasks",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: const BoxDecoration(
+                  color: Colors.purple,
+                  shape: BoxShape.circle,
+                ),
+                child: Text(
+                  "$counter",
+                  style: const TextStyle(
+                    fontSize: 36,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              const Expanded(
+                child: Text(
+                  "Anzahl angelegter Tasks",
+                  style: TextStyle(
+                    fontSize: 14,
                   ),
                 ),
               ),
