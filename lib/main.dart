@@ -9,7 +9,7 @@ void main() async {
   // Wird benötigt, um auf SharedPreferences zuzugreifen
   WidgetsFlutterBinding.ensureInitialized();
 
-  final DatabaseRepository repository = SharedPreferencesDatabase();
-
+  final SharedPreferencesDatabase repository = SharedPreferencesDatabase();
+  await repository.initpref();
   runApp(App(repository: repository));
 }

@@ -3,15 +3,22 @@ import 'package:simple_beautiful_checklist_exercise/data/database_repository.dar
 
 class SharedPreferencesDatabase implements DatabaseRepository {
   SharedPreferences? pref;
+
+  Future<void> initpref() async {
+    pref = await SharedPreferences.getInstance();
+  }
+
   List<String> stringList = [];
   @override
   Future<void> addItem(String item) async {
+
     await pref!.setString(item, item);
     stringList.add(item);
   }
 
   @override
   Future<void> deleteItem(int index) async {
+
     pref!.remove(stringList.elementAt(index));
   }
 
