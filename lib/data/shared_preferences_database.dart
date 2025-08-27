@@ -9,32 +9,48 @@ class SharedPreferencesDatabase implements DatabaseRepository {
   static int counter = 0;
 
   Future<void> loadData() async {
-    if (pref != null) {
-      stringList = pref!.getStringList(listkey) ?? [];
-      counter = pref!.getInt("tasks")?? 0;
+    try {
+      if (pref != null) {
+        stringList = pref!.getStringList(listkey) ?? [];
+        counter = pref!.getInt("tasks") ?? 0;
+      }
+    } catch (e) {
+      debugPrint("Fehler in loadData aufgetreten $e");
     }
   }
 
   Future<void> _saveData() async {
-    if (pref != null) {
-      await pref!.setStringList(listkey, stringList);
-      await pref!.setInt("tasks", counter);
+    try {
+      if (pref != null) {
+        await pref!.setStringList(listkey, stringList);
+        await pref!.setInt("tasks", counter);
+      }
+    } catch (e) {
+      debugPrint("Fehler in save data aufgetreten: $e");
     }
   }
 
   Future<void> initpref() async {
-    pref = await SharedPreferences.getInstance();
-    await loadData();
+    try {
+      pref = await SharedPreferences.getInstance();
+      await loadData();
+    } catch (e) {
+      debugPrint("Fehler in initpref aufgetreten +$e");
+    }
   }
 
   @override
   Future<void> addItem(String item) async {
-    if (!stringList.contains(item)) {
-      counter++;
-      stringList.add(item);
-      await _saveData();
-    } else {
-      debugPrint("item ist schon drinnen");
+    try {
+      if (!stringList.contains(item)) {
+        counter++;
+        stringList.add(item);
+        await _saveData();
+      } else {
+        debugPrint("item ist schon drinnen");
+      }
+    } catch (e) {
+      debugPrint("Fehler in addItem aufgetreten $e");
     }
   }
 
@@ -46,17 +62,31 @@ class SharedPreferencesDatabase implements DatabaseRepository {
 
   @override
   Future<void> editItem(int index, String newItem) async {
-    stringList[index] = newItem;
-    await _saveData();
+    try {
+      stringList[index] = newItem;
+      await _saveData();
+    } catch (e) {
+      debugPrint("Fehler in editItem aufgetreten $e");
+    }
   }
 
   @override
   Future<int> getItemCount() async {
-    return stringList.length;
+    try {
+      return stringList.length;
+    } catch (e) {
+      debugPrint("Fehler in getItemCount aufgetreten $e");
+    }
+    return -1;
   }
 
   @override
   Future<List<String>> getItems() async {
-    return stringList;
+    try {
+      return stringList;
+    } catch (e) {
+      debugPrint("Fehler in getItems aufgetreten $e");
+    }
+    return [];
   }
 }
